@@ -26,10 +26,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
 
     public ArrayTabulatedFunction(double leftX, double rightX, double[] values)             //конструктор для заданных границ x и массива из значений y
     {
-        if (leftX >= rightX || values.length < 2)
-        {
-            throw new IllegalArgumentException();
-        }
+        if (leftX >= rightX || values.length < 2) throw new IllegalArgumentException();
         else
         {
             this.points = new FunctionPoint[values.length + 10];
@@ -49,9 +46,10 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
             if(array[i].getX() > array[i+1].getX()) throw  new IllegalArgumentException();
         }
         this.NumberPoints = array.length;
+        this.points = new FunctionPoint[array.length];
         for (int i = 0; i < array.length; ++i)
         {
-
+            points[i] = array[i];
         }
     }
 
@@ -68,7 +66,7 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
 
     public double getFunctionValue(double x)           //метод, возвращающий значение функции в точке x
     {
-        if ((this.points[0].getX() > x) || (this.points[NumberPoints - 1].getX() < x)) return Double.NaN;
+        if ((x < getLeftDomainBorder()) || (x > getRightDomainBorder())) return Double.NaN;
         int i = 0;
         while (this.points[i].getX() < x) ++i;
         double a, b;
