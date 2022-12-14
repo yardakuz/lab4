@@ -67,6 +67,9 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
     public double getFunctionValue(double x)           //метод, возвращающий значение функции в точке x
     {
         if ((x < getLeftDomainBorder()) || (x > getRightDomainBorder())) return Double.NaN;
+        for (int i = 0; i < NumberPoints; ++i){
+            if(points[i].getX() == x) return points[i].getY();
+        }
         int i = 0;
         while (this.points[i].getX() < x) ++i;
         double a, b;
